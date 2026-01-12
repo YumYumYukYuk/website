@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YumYumYukYuk.com</title>
+
+  <!-- Quirky indie fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#0c1020;
+      --bg2:#1a0f2b;
+      --card:#121833cc;
+      --ink:#f7f6ff;
+      --muted:#d6d4ffcc;
+
+      /* pop accents */
+      --lime:#b7ff4a;
+      --pink:#ff4ad8;
+      --aqua:#2ef2ff;
+      --yellow:#ffe66d;
+      --shadow: 0 24px 70px rgba(0,0,0,.45);
+      --radius: 26px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      color:var(--ink);
+      font-family:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      background:
+        radial-gradient(1200px 700px at 15% 20%, rgba(46,242,255,.18), transparent 60%),
+        radial-gradient(900px 600px at 85% 20%, rgba(255,74,216,.14), transparent 55%),
+        radial-gradient(1100px 900px at 50% 85%, rgba(183,255,74,.12), transparent 60%),
+        linear-gradient(145deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding: clamp(24px, 4vw, 56px);
+    }
+
+    .card{
+      width:min(980px, 100%);
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: clamp(22px, 4vw, 42px);
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* playful “sticker” blobs */
+    .card::before,
+    .card::after{
+      content:"";
+      position:absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 60px;
+      filter: blur(.0px);
+      opacity:.75;
+      z-index:0;
+      transform: rotate(12deg);
+    }
+    .card::before{
+      top:-80px; left:-70px;
+      background: radial-gradient(circle at 30% 30%, rgba(46,242,255,.55), rgba(46,242,255,.0) 70%);
+    }
+    .card::after{
+      bottom:-110px; right:-90px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,74,216,.45), rgba(255,74,216,.0) 70%);
+      transform: rotate(-18deg);
+    }
+
+    .row{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: clamp(14px, 3vw, 28px);
+      position:relative;
+      z-index:1;
+      flex-wrap:nowrap;
+    }
+
+    .char{
+      width: clamp(84px, 14vw, 170px);
+      aspect-ratio: 1 / 1;
+      display:grid;
+      place-items:center;
+      border-radius: 22px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      box-shadow: 0 12px 30px rgba(0,0,0,.25);
+      overflow:hidden;
+    }
+
+    .char img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+
+    .title-wrap{
+      flex: 1 1 auto;
+      min-width: 220px;
+      text-align:center;
+    }
+
+    .title{
+      text-align:center;
+      line-height:1.0;
+      margin: 0;
+      font-family:"Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-weight:700;
+      font-size: clamp(34px, 6vw, 64px);
+      letter-spacing: .4px;
+      text-shadow: 0 6px 0 rgba(0,0,0,.22);
+    }
+
+    .title .yum{
+      background: linear-gradient(90deg, var(--aqua), var(--lime));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .title .yuk{
+      background: linear-gradient(90deg, var(--yellow), var(--pink));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .pill{
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.10);
+      font-size: 13px;
+      letter-spacing:.2px;
+    }
+
+    .copy{
+      margin: 22px auto 0;
+      max-width: 64ch;
+      text-align:center;
+      color: var(--muted);
+      font-size: clamp(14px, 1.7vw, 16px);
+      line-height:1.6;
+      position:relative;
+      z-index:1;
+    }
+
+    .badge{
+      font-family:"Fredoka", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-weight:700;
+      font-size: 14px;
+      padding: 10px 14px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,.22);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+      box-shadow: 0 10px 26px rgba(0,0,0,.25);
+    }
+
+    .badge span{
+      color: var(--aqua);
+    }
+
+    /* responsive tweaks */
+    @media (max-width: 760px){
+      .row{ flex-wrap:wrap; }
+    }
+
+    @media (max-width: 560px){
+      .char{ width: 92px; border-radius: 18px; }
+      .title{ font-size: 38px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="card" aria-label="YumYumYukYuk landing page">
+      <div class="row">
+        <!-- Replace image filenames with your actual assets -->
+        <div class="char" title="YumYum (licking her lips)">
+          <img src="images/yumyum.png" alt="YumYum character, clay covered in blue fur, licking her lips">
+        </div>
+
+        <div class="title-wrap">
+          <h1 class="title" aria-label="YumYumYukYuk">
+            <span class="yum">YumYum</span><span class="yuk">YukYuk</span>
+          </h1>
+        </div>
+
+        <div class="char" title="YukYuk (comically disgusted)">
+          <img src="images/yukyuk.png" alt="YukYuk character, clay covered in blue fur, looking comically disgusted">
+        </div>
+      </div>
+
+      <p class="copy">
+        we’re a new game developer run by old people — watch this space
+      </p>
+    </section>
+  </main>
+</body>
+</html>
